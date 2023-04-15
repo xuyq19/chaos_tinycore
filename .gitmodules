@@ -1,0 +1,6 @@
+[submodule "ucoreonrv"]
+	path = ucoreonrv
+	url = https://github.com/nkgongxl/ucoreonrv/tree/master
+[submodule "lzu_oslab"]
+	path = lzu_oslab
+	url = https://github.com/RvOSLab/lzu_oslab
