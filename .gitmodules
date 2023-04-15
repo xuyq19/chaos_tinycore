@@ -4,3 +4,6 @@
 [submodule "ucoreonrv"]
 	path = ucoreonrv
 	url = git@github.com:nkgongxl/ucoreonrv.git
+[submodule "testsuits-for-oskernel"]
+	path = testsuits-for-oskernel
+	url = git@github.com:oscomp/testsuits-for-oskernel.git
