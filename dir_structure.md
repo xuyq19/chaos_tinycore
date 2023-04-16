@@ -8,7 +8,7 @@
     - serial
     - ide
     - irq(interrupt request)
-    - #remdisk
+    - #memdisk
   - init (almost done)
   - kernel
   - lib
