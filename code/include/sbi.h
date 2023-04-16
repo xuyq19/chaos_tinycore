@@ -60,7 +60,6 @@ uint64_t SBI_SHUTDOWN = 0x8;
 /**
  * @brief sbi return type
  * @copyright riscv-non-isa
- * @param error error type
  */
 struct sbiret
 {
@@ -77,6 +76,6 @@ int sbi_console_getchar(void);                        /** read a byte from debug
 void sbi_console_putchar(unsigned char ch);           /** print character to debug console */
 void sbi_shutdown();                                  /** shutdown */
 void print_system_infomation();
-uint64_t riscv_sbi_ecall(uint64_t sbi_type, uint64_t arg0, uint64_t arg1, uint64_t arg2);
+struct sbiret riscv_sbi_ecall(uint64_t sbi_extension_id, uint64_t sbi_function_id, uint64_t arg0, uint64_t arg1, uint64_t arg2)
 
 #endif
