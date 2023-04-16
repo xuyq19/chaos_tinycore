@@ -27,6 +27,7 @@
 #define SBI_ERR_ALREADY_STOPPED -8
 
 /** extenstion id */
+/** a7 register encodes the SBI extention ID */
 #define BASE_EXTENSTION 0x10
 #define TIMER_EXTENTION 0x54494D45
 #define HART_STATE_EXTENTION 0x48534D
@@ -34,7 +35,7 @@
 
 /** sbi implementation id */
 
-/** we only use OpenSBI */
+/** we love OpenSBI */
 #define BERKELY_BOOT_LOADER 0
 #define OPENSBI 1
 #define XVISOR 2
@@ -43,17 +44,24 @@
 #define DIOSIX 5
 
 /** sbi function code */
-uint64_t SBI_SET_TIMER = 0;
-uint64_t SBI_CONSOLE_PUTCHAR = 1;
-uint64_t SBI_CONSOLE_GETCHAR = 2;
-uint64_t SBI_CLEAR_IPI = 3;
-uint64_t SBI_SEND_IPI = 4;
-uint64_t SBI_REMOTE_FENCE_I = 5;
-uint64_t SBI_REMOTE_SFENCE_VMA = 6;
-uint64_t SBI_REMOTE_SFENCE_VMA_ASID = 7;
-uint64_t SBI_SHUTDOWN = 8;
+/** a6 register encodes the SBI function ID */
+uint64_t SBI_SET_TIMER = 0x0;
+uint64_t SBI_CONSOLE_PUTCHAR = 0x1;
+uint64_t SBI_CONSOLE_GETCHAR = 0x2;
+uint64_t SBI_CLEAR_IPI = 0x3;
+uint64_t SBI_SEND_IPI = 0x4;
+uint64_t SBI_REMOTE_FENCE_I = 0x5;
+uint64_t SBI_REMOTE_SFENCE_VMA = 0x6;
+uint64_t SBI_REMOTE_SFENCE_VMA_ASID = 0x7;
+uint64_t SBI_SHUTDOWN = 0x8;
 
 /** sbi ecall return type */
+
+/**
+ * @brief sbi return type
+ * @copyright riscv-non-isa
+ * @param error error type
+ */
 struct sbiret
 {
     long error;
@@ -69,6 +77,6 @@ int sbi_console_getchar(void);                        /** read a byte from debug
 void sbi_console_putchar(unsigned char ch);           /** print character to debug console */
 void sbi_shutdown();                                  /** shutdown */
 void print_system_infomation();
-uint64_t sbi_call(uint64_t sbi_type, uint64_t arg0, uint64_t arg1, uint64_t arg2);
+uint64_t riscv_sbi_ecall(uint64_t sbi_type, uint64_t arg0, uint64_t arg1, uint64_t arg2);
 
 #endif

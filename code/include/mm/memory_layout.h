@@ -41,4 +41,8 @@
  *     0x00000000----->+--------------+
  */
 
+#define SBI_BASE 0x80000000
+#define SBI_TOP 0x80200000
+#define MEM_BASE 0x80000000
+
 #endif
