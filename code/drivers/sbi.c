@@ -32,7 +32,7 @@ struct sbiret riscv_sbi_ecall(uint64_t sbi_extension_id, uint64_t sbi_function_i
  */
 void sbi_console_putchar(int ch)
 {
-    riscv_sbi_ecall(SBI_CONSOLE_PUTCHAR, 0, ch, 0, 0);
+    riscv_sbi_ecall(SBI_EXT_LEGACY_PUT_CHAR, 0, ch, 0, 0);
 }
 
 /**
@@ -42,7 +42,7 @@ void sbi_console_putchar(int ch)
  */
 int sbi_console_getchar()
 {
-    riscv_sbi_ecall(SBI_CONSOLE_GETCHAR, 0, 0, 0, 0);
+    riscv_sbi_ecall(SBI_EXT_LEGACY_GET_CHAR, 0, 0, 0, 0);
 }
 
 /**
@@ -53,7 +53,7 @@ int sbi_console_getchar()
 struct sbiret sbi_get_spec_version()
 {
     // return (struct sbiret){ error, value };
-    return riscv_sbi_ecall(BASE_EXTENSTION, 0, 0, 0, 0);
+    return riscv_sbi_ecall(SBI_EXT_BASE, 0, 0, 0, 0);
 }
 
 /**
@@ -63,7 +63,7 @@ struct sbiret sbi_get_spec_version()
  */
 struct sbiret sbi_get_impl_id()
 {
-    return riscv_sbi_ecall(BASE_EXTENSTION, 1, 0, 0, 0);
+    return riscv_sbi_ecall(SBI_EXT_BASE, 1, 0, 0, 0);
 }
 
 /**
@@ -73,7 +73,7 @@ struct sbiret sbi_get_impl_id()
  */
 struct sbiret sbi_get_impl_version()
 {
-    return riscv_sbi_ecall(BASE_EXTENSTION, 2, 0, 0, 0);
+    return riscv_sbi_ecall(SBI_EXT_BASE, 2, 0, 0, 0);
 }
 
 /**
@@ -84,15 +84,12 @@ struct sbiret sbi_get_impl_version()
  */
 struct sbiret sbi_probe_extension(uint64_t extension_id)
 {
-    return riscv_sbi_ecall(BASE_EXTENSTION, 3, extension_id, 0, 0);
+    return riscv_sbi_ecall(SBI_EXT_BASE, 3, extension_id, 0, 0);
 }
-/**
- * @brief sbi shutdown
- *
- */
-void sbi_shutdown()
+
+struct sbiret sbi_system_reset(uint32_t reset_type, uint32_t reset_reason)
 {
-    riscv_sbi_ecall(SBI_SHUTDOWN, 0, 0, 0, 0);
+    return riscv_sbi_ecall(SBI_EXT_SRST, reset_type, 0, 0, 0);
 }
 
 /**
@@ -102,5 +99,5 @@ void sbi_shutdown()
  */
 void sbi_set_timer(uint64_t stime_value)
 {
-    riscv_sbi_ecall(TIMER_EXTENTION, SBI_SET_TIMER, stime_value, 0, 0);
+    riscv_sbi_ecall(SBI_EXT_TIME, SBI_EXT_TIME_SET_TIMER, stime_value, 0, 0);
 }
