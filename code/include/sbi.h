@@ -28,32 +28,49 @@
 
 /** extenstion id */
 /** a7 register encodes the SBI extention ID */
-#define BASE_EXTENSTION 0x10
-#define TIMER_EXTENTION 0x54494D45
-#define HART_STATE_EXTENTION 0x48534D
-#define RESET_EXTENTION 0x53525354
+#define SBI_EXT_BASE 0x10
+#define SBI_EXT_TIME 0x54494D45
+#define SBI_EXT_IPI 0x735049
+#define SBI_EXT_RFENCE 0x52464E43
+#define SBI_EXT_HSM 0x48534D
+#define SBI_EXT_SRST 0x53525354
+#define SBI_EXT_PMU 0x504D55
+#define SBI_EXT_DBCN 0x4442434E
+#define SBI_EXT_SUSP 0x53555350
+#define SBI_EXT_CPPC 0x43505043
+
+/** a6 register encodes the SBI function ID */
+/** SBI function IDs for BASE extension */
+#define SBI_EXT_BASE_GET_SPEC_VERSION 0x0
+#define SBI_EXT_BASE_GET_IMP_ID 0x1
+#define SBI_EXT_BASE_GET_IMP_VERSION 0x2
+#define SBI_EXT_BASE_PROBE_EXT 0x3
+#define SBI_EXT_BASE_GET_MVENDORID 0x4
+#define SBI_EXT_BASE_GET_MARCHID 0x5
+#define SBI_EXT_BASE_GET_MIMPID 0x6
+
+/** SBI function IDs for TIME extension */
+#define SBI_EXT_TIME_SET_TIMER 0x0
+
+/** SBI function IDs for IPI extension*/
+#define SBI_EXT_IPI_SEND_IPI 0x0
+
+/** SBI function IDs for RFENCE extension */
+#define SBI_EXT_RFENCE_REMOTE_FENCE_I 0x0
+#define SBI_EXT_RFENCE_REMOTE_SFENCE_VMA 0x1
+#define SBI_EXT_RFENCE_REMOTE_SFENCE_VMA_ASID 0x2
+#define SBI_EXT_RFENCE_REMOTE_HFENCE_GVMA_VMID 0x3
+#define SBI_EXT_RFENCE_REMOTE_HFENCE_GVMA 0x4
+#define SBI_EXT_RFENCE_REMOTE_HFENCE_VVMA_ASID 0x5
+#define SBI_EXT_RFENCE_REMOTE_HFENCE_VVMA 0x6
 
 /** sbi implementation id */
-
-/** we love OpenSBI */
 #define BERKELY_BOOT_LOADER 0
 #define OPENSBI 1
 #define XVISOR 2
 #define KVM 3
 #define RUSTSBI 4
 #define DIOSIX 5
-
-/** sbi function code */
-/** a6 register encodes the SBI function ID */
-uint64_t SBI_SET_TIMER = 0x0;
-uint64_t SBI_CONSOLE_PUTCHAR = 0x1;
-uint64_t SBI_CONSOLE_GETCHAR = 0x2;
-uint64_t SBI_CLEAR_IPI = 0x3;
-uint64_t SBI_SEND_IPI = 0x4;
-uint64_t SBI_REMOTE_FENCE_I = 0x5;
-uint64_t SBI_REMOTE_SFENCE_VMA = 0x6;
-uint64_t SBI_REMOTE_SFENCE_VMA_ASID = 0x7;
-uint64_t SBI_SHUTDOWN = 0x8;
 
 /** sbi ecall return type */
 
@@ -67,15 +84,17 @@ struct sbiret
     long value;
 };
 
-struct sbiret sbi_get_spec_version();                 /** get sbi specification version */
-struct sbiret sbi_get_impl_id();                      /** get sbi implementation id */
-struct sbiret sbi_get_impl_version();                 /** get sbi implementation version */
-struct sbiret sbi_probe_extension(long extension_id); /** probe sbi extenstion */
-void sbi_set_timer(uint64_t stime_value);             /** set timer */
-int sbi_console_getchar(void);                        /** read a byte from debug console */
-void sbi_console_putchar(unsigned char ch);           /** print character to debug console */
-void sbi_shutdown();                                  /** shutdown */
+struct sbiret riscv_sbi_ecall(uint64_t sbi_extension_id, uint64_t sbi_function_id, uint64_t arg0, uint64_t arg1, uint64_t arg2);
+struct sbiret sbi_get_spec_version();                                       /** get sbi specification version */
+struct sbiret sbi_get_impl_id();                                            /** get sbi implementation id */
+struct sbiret sbi_get_impl_version();                                       /** get sbi implementation version */
+struct sbiret sbi_system_reset(uint32_t reset_type, uint32_t reset_reason); /** reset system */
+struct sbiret sbi_probe_extension(uint64_t extension_id);                   /** probe sbi extenstion */
+void sbi_set_timer(uint64_t stime_value);                                   /** set timer */
+int sbi_console_getchar(void);                                              /** read a byte from debug console */
+void sbi_console_putchar(int ch);                                           /** print character to debug console */
+
 void print_system_infomation();
-struct sbiret riscv_sbi_ecall(uint64_t sbi_extension_id, uint64_t sbi_function_id, uint64_t arg0, uint64_t arg1, uint64_t arg2)
+struct sbiret riscv_sbi_ecall(uint64_t sbi_extension_id, uint64_t sbi_function_id, uint64_t arg0, uint64_t arg1, uint64_t arg2);
 
 #endif
