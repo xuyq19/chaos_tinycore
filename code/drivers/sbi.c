@@ -19,7 +19,7 @@ struct sbiret riscv_sbi_ecall(uint64_t sbi_extension_id, uint64_t sbi_function_i
     register uint64_t a6 asm("x16") = sbi_function_id;
     __asm__ __volatile__("ecall \n\t"
                          : /* empty output list */
-                         : "r"(a0), "r"(a1), "r"(a2), "r"(a7), "r"(a6)
+                         : "+r"(a0), "+r"(a1), "r"(a2), "r"(a7), "r"(a6)
                          : "memory");
     return (struct sbiret){a0, a1};
 }
@@ -101,3 +101,39 @@ void sbi_set_timer(uint64_t stime_value)
 {
     riscv_sbi_ecall(SBI_EXT_TIME, SBI_EXT_TIME_SET_TIMER, stime_value, 0, 0);
 }
+
+/**
+ * @brief Instructs remote harts to execute FENCE.I instruction. The hart_mask is same as described in sbi_send_ipi().
+ *
+ * @param hart_mask
+ */
+void sbi_remote_fence_i(const unsigned long *hart_mask)
+{
+    riscv_sbi_ecall(SBI_EXT_RFENCE, SBI_EXT_RFENCE_REMOTE_FENCE_I, hart_mask, 0, 0);
+}
+
+/**
+ * @brief Instructs remote harts to execute SFENCE.VMA instruction. The hart_mask is same as described in sbi_send_ipi().
+ *
+ * @param hart_mask
+ * @param start
+ * @param size
+ */
+void sbi_remote_sfence_vma(const unsigned long *hart_mask, unsigned long start, unsigned long size)
+{
+    riscv_sbi_ecall(SBI_EXT_RFENCE, SBI_EXT_RFENCE_REMOTE_SFENCE_VMA, hart_mask, 0, 0);
+}
+
+/**
+ * @brief Instructs remote harts to execute SFENCE.VMA instruction with ASID. The hart_mask is same as described in sbi_send_ipi().
+ *
+ * @param hart_mask
+ * @param start
+ * @param size
+ * @param asid
+ */
+void sbi_remote_sfence_vma_asid(const unsigned long *hart_mask, unsigned long start, unsigned long size, unsigned long asid)
+{
+    riscv_sbi_ecall(SBI_EXT_RFENCE, SBI_EXT_RFENCE_REMOTE_SFENCE_VMA_ASID, hart_mask, 0, 0);
+}
+
