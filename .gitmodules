@@ -1,6 +1,6 @@
 [submodule "lzu_oslab"]
 	path = lzu_oslab
-	url = https://github.com/RvOSLab/lzu_oslab
+	url = git@github.com:RvOSLab/lzu_oslab.git
 [submodule "ucoreonrv"]
 	path = ucoreonrv
 	url = git@github.com:nkgongxl/ucoreonrv.git
