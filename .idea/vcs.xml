@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lzu_oslab" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/testsuits-for-oskernel" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ucoreonrv" vcs="Git" />
+  </component>
+</project>
