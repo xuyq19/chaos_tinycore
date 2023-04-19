@@ -1,3 +1,6 @@
+#ifndef __TRAP_H__
+#define __TRAP_H__
+#endif
 #include<stdint.h>
 #include<stddef.h>
 /*
@@ -111,6 +114,7 @@ struct trapframe
     uint64_t t4; //x29
     uint64_t t5; //x30
     uint64_t t6; //x31
+
     //CSR寄存器
     uint64_t status; //status
     uint64_t epc; //exception PC 保存异常发生时PC的值
