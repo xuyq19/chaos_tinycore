@@ -1,3 +1,9 @@
+#ifndef __TRAP_H__
+#define __TRAP_H__
+
+#include<stddef.h>
+#include<stdint.h>
+
 struct trapframe
 {
     //这里列出所有可能会用到的CSR寄存器
@@ -43,4 +49,6 @@ struct trapframe
     uint64_t t4; //x29
     uint64_t t5; //x30
     uint64_t t6; //x31
-}
+};
+
+#endif
