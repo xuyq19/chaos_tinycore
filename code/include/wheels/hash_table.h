@@ -2,8 +2,8 @@
 #define __HASH_TABLE_H__
 
 #include "linked_list.h"
-#include <cstdint>
 #include "stddef.h"
+#include <cstdint>
 
 struct hash_table_node {
   struct linked_list_node confliced_list;
