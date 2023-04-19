@@ -144,4 +144,5 @@ linked_list_shift(struct linked_list_node *list) {
  */
 #define for_each_node(node, list)                                              \
   for (node = get_first_node(list); node != list; node = node->next)
+
 #endif
