@@ -4,6 +4,8 @@
 .align 4
 #四字节对齐
 __save_register:
+    #保存原sp
+    csrw sscratch, sp
     #栈是高地址向低地址生长，sp减去一段数为sp占用了一段空间 36个64位寄存器下移36 * (64/8)
     addi sp, sp, -36*8
     #存储x1-x31寄存器的值到栈中
@@ -39,6 +41,8 @@ __save_register:
     sd x30, 30*8(sp)
     sd x31, 31*8(sp)
     #通用寄存器保存完毕
+    #读取原sp值 直接用addi也可以...?
+    csrr s0, sscratch
     #读取并保存sstatus sepc stval scause寄存器
     #读取csr寄存器
     csrr s1, sstatus
@@ -50,15 +54,17 @@ __save_register:
     sd s2 33*8(sp)
     sd s3 34*8(sp)
     sd s4 35*8(sp)
-    #Q:为啥要把s0再放一次
     sd s0, 2*8(sp)
     mv a0, sp
-    #跳转到trap函数 PC+4 放入x1(默认放入x1...?)
-    jal x1, trap
+    #跳转到trap函数 栈的地址作为trap函数的变量
+    call trap
 .global __restore_register
 __restore_register
+    #把参数trapframe地址交给sp
+    move sp, a0
     ld s1 32*8(sp)
     ld s2 33*8(sp)
+    #恢复sstatus sepc
     csrw sstatus, s1
     csrw sepc, s2
     ld x1, 1*8(sp)
@@ -91,10 +97,8 @@ __restore_register
     ld x29, 29*8(sp)
     ld x30, 30*8(sp)
     ld x31, 31*8(sp)
+    #最后恢复栈指针
     ld x2, 2*8(sp)
+    #从内核态中断返回
     sret
     
-_interrupt_handler:
-    # 中断处理程序
-    # 在这里处理中断，然后使用sret指令返回
-    sret                      # 使用sret指令返回
