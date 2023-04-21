@@ -1,8 +1,8 @@
 #ifndef __HASH_TABLE_H__
 #define __HASH_TABLE_H__
 
+#include "../defs.h"
 #include "linked_list.h"
-#include "stddef.h"
 #include <cstdint>
 
 struct hash_table_node {
