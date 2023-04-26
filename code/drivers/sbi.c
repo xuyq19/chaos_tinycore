@@ -105,7 +105,7 @@ void sbi_set_timer(uint64_t stime_value)
 /**
  * @brief Instructs remote harts to execute FENCE.I instruction. The hart_mask is same as described in sbi_send_ipi().
  *
- * @param hart_mask
+ * @param *hart_mask
  */
 void sbi_remote_fence_i(const unsigned long *hart_mask)
 {
@@ -137,3 +137,6 @@ void sbi_remote_sfence_vma_asid(const unsigned long *hart_mask, unsigned long st
     riscv_sbi_ecall(SBI_EXT_RFENCE, SBI_EXT_RFENCE_REMOTE_SFENCE_VMA_ASID, hart_mask, 0, 0);
 }
 
+int sbi_send_ipi(const struct cpumask *cpu_mask){
+    
+}
