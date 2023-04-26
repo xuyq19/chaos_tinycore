@@ -1,10 +1,8 @@
 #ifndef __HASH_TABLE_H__
 #define __HASH_TABLE_H__
 
+#include "../../include/defs.h"
 #include "linked_list.h"
-#include "stddef.h"
-#include <cstdint>
-
 struct hash_table_node {
   struct linked_list_node confliced_list;
 };
@@ -31,7 +29,8 @@ hash_table_get(struct hash_table *table, struct hash_table_node *node) {
   struct linked_list_node *list_node;
   struct hash_table_node *hash_node;
   for_each_node(list_node, confliced_list) {
-    hash_node = container_of(list_node, struct hash_table_node, confliced_list);
+    hash_node =
+        _container_of(list_node, struct hash_table_node, confliced_list);
     if (table->is_equal(node, hash_node))
       break;
   }
