@@ -27,7 +27,7 @@ typedef signed long longssize_t;
 #else
 #define offsetof(type, member) ((uint64_t) & ((type *)0)->member)
 #endif
-#define container_of(ptr, type, member)                                        \
+#define _container_of(ptr, type, member)                                       \
   ({                                                                           \
     const typeof(((type *)0)->member) *_mptr = (ptr);                          \
     (type *)((char *)_mptr - offsetof(type, member));                          \
