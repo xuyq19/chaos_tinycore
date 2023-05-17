@@ -137,6 +137,7 @@ void sbi_remote_sfence_vma_asid(const unsigned long *hart_mask, unsigned long st
     riscv_sbi_ecall(SBI_EXT_RFENCE, SBI_EXT_RFENCE_REMOTE_SFENCE_VMA_ASID, hart_mask, 0, 0);
 }
 
-int sbi_send_ipi(const struct cpumask *cpu_mask){
-    
+void sbi_hart_start(uint64_t hart_id, uint64_t start_addr, uint64_t a1)
+{
+    riscv_sbi_ecall(0x48534D, 0, hart_id, start_addr, a1);
 }
